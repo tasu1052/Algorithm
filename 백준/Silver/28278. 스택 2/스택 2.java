@@ -7,6 +7,7 @@ public class Main{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer stn = new StringTokenizer(br.readLine(), " ");
         Stack<Integer> st = new Stack<Integer>();
+        StringBuilder sb = new StringBuilder();
         
         int N = Integer.parseInt(stn.nextToken());
         
@@ -22,34 +23,35 @@ public class Main{
                 case 1: st.push(x);
                         break;
                 case 2: if(!st.isEmpty()){
-                        System.out.println(st.pop());
+                        sb.append(st.pop()).append('\n');
                         break;
                 }
                         else{
-                            System.out.println(-1);
+                            sb.append(-1).append('\n');
                             break;
                            }
                 case 3: 
-                           System.out.println(st.size());
+                           sb.append(st.size()).append('\n');
                            break;
-                case 4: if(st.empty()){
-                           System.out.println(1);
+                case 4: if(st.isEmpty()){
+                           sb.append(1).append('\n');
                            break;
                 }
                         else{
-                           System.out.println(0);
+                           sb.append(0).append('\n');
                             break;
                         }
                 case 5:
-                           if(!st.empty()){
-                               System.out.println(st.peek());
+                           if(!st.isEmpty()){
+                               sb.append(st.peek()).append('\n');
                                break;
                            }
                            else{
-                               System.out.println(-1);
+                               sb.append(-1).append('\n');
                                break;
                            }
             }
         }
+        System.out.print(sb.toString());
     }
 }

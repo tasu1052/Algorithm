@@ -6,15 +6,17 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
         int N = Integer.parseInt(br.readLine());
-        int[] arr = new int[N];
+        
+        boolean[] arr = new boolean[2001];
         
         for(int i=0; i<N; i++)
-            arr[i]=Integer.parseInt(br.readLine());
+            arr[Integer.parseInt(br.readLine()) + 1000] = true;
         
-        Arrays.sort(arr);
-        
-        for(int val : arr)
-            sb.append(val).append('\n');
+        for(int i=0; i<2001; i++){
+            if(arr[i]){
+                sb.append(i-1000).append('\n');
+            }
+        }
         
         System.out.print(sb);
     }

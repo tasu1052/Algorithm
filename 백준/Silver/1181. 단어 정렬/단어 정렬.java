@@ -12,29 +12,20 @@ public class Main {
         for(int i=0; i<N; i++){
             S[i] = br.readLine();
         }
-        String[] SortedS = new String[N];
-        for(int i=0; i<N; i++){
-            for(int j=i; j<N; j++){
-                if(S[i].length()>S[j].length()){
-                    String tmp = S[i];
-                    S[i] = S[j];
-                    S[j] = tmp;
-                }
-                else if(S[i].length() == S[j].length()){
-                    if(S[i].compareTo(S[j])>0){
-                        String tmp = S[i];
-                        S[i] = S[j];
-                        S[j] = tmp;
-                    }
-                }
-            } 
-            SortedS[i] = S[i];
-        }
         
-        SortedS = Arrays.stream(SortedS).distinct().toArray(String[]::new);
+        Arrays.sort(S, (s1, s2)->{
+            if(s1.length()==s2.length()){
+                return s1.compareTo(s2);
+            }
+            else{
+                return s1.length() - s2.length();
+            }
+        });
         
-        for(int i=0; i<SortedS.length; i++){
-            sb.append(SortedS[i]).append('\n');
+        sb.append(S[0]).append('\n');
+        for(int i=1; i<N; i++){
+            if(!S[i].equals(S[i-1]))
+                sb.append(S[i]).append('\n');
         }
         
         System.out.print(sb);

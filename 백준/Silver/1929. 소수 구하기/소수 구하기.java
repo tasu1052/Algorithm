@@ -10,20 +10,17 @@ public class Main {
         int N = Integer.parseInt(st.nextToken());
        
         boolean[] Prime = new boolean[N+1];
-        
-        for(int i=2; i<Prime.length; i++)
-            Prime[i] = true;
-        
+        Prime[0] = Prime[1] = true;
         for(int i=2; i<=Math.sqrt(N); i++){
-            if(Prime[i]){
+            if(!Prime[i]){
                 for(int j=i*i; j<=N; j+=i)
-                    Prime[j] = false;
+                    Prime[j] = true;
             }
         }
         
         StringBuilder sb = new StringBuilder();
         for(int i=M; i<=N; i++){
-            if(Prime[i])
+            if(!Prime[i])
                 sb.append(i).append('\n');
         }
         System.out.print(sb);

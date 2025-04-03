@@ -2,6 +2,7 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
+    static int[][] dp;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         
@@ -9,17 +10,16 @@ public class Main {
         int N = Integer.parseInt(st.nextToken());
         int K = Integer.parseInt(st.nextToken());
 
-        int mod=1;
-        int den=1;
-        int n = N+1;
-        int k = K+1;
-        for(int i=0; i<K; i++){
-            n--;
-            mod *= n;
-            k--;
-            den *= k;
-        }
-        int sum = mod/den;
-        System.out.print(sum);
+        dp = new int[N+1][K+1];
+        
+        System.out.println(BC(N,K));
+    }
+    
+    static int BC(int n, int k){
+        if(dp[n][k] > 0)
+            return dp[n][k];
+        if(k==0||n==k)
+            return dp[n][k]=1;
+        return dp[n][k] = BC(n-1, k-1) + BC(n-1, k);
     }
 }

@@ -4,17 +4,21 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
+        final int MOD = 1234567891;
+        final int R = 31;
+        
         int L = Integer.parseInt(br.readLine());
-
         String S = br.readLine();
         
-        int sum=0;
-        for(int i=0; i<S.length(); i++){
-            char c = S.charAt(i);
-            sum += (c-96)*Math.pow(31, i);
+        long hash = 0;
+        long power = 1;
+
+        for (int i = 0; i < L; i++) {
+            int c = S.charAt(i) - 'a' + 1;
+            hash = (hash + c * power) % MOD;
+            power = (power * R) % MOD;
         }
-        
-        System.out.print(sum);
+
+        System.out.println(hash);
     }
 }

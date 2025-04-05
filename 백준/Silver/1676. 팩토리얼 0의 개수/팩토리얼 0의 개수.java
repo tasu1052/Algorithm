@@ -8,17 +8,9 @@ public class Main {
 
         int n = Integer.parseInt(br.readLine());
         
-        BigInteger fact = BigInteger.ONE;
-        for(int i=2; i<=n; i++){
-            fact = fact.multiply(BigInteger.valueOf(i));
-        }
-        
-        String s = fact.toString();
         int count = 0;
-        for(int i=s.length()-1; i>=0; i--){
-            if(s.charAt(i) == '0') count++;
-            else break;
-        }
+        for(int i=5; n/i>=1; i*=5)
+            count+=n/i;
         System.out.print(count);
     }
 }

@@ -19,34 +19,11 @@ public class Solution {
                 }
             }
 
-            int start = (N-1)/2;
-            int end = (N-1)/2;
             int sum = 0;
-            int idx = 0;
-            
-            while(idx<N){
-                if(idx<=(N-1)/2){
-                    for(int i=start; i<=end; i++){
-                        sum += arr[idx][i];
-                    }
-                    if(idx == (N-1)/2){
-                        start++;
-                        end--;
-                    }
-                    else{
-                        start--;
-                        end++;
-                    }
-                    idx++;
-                    
-                }
-                else{
-                    for(int i=start; i<=end; i++){
-                        sum += arr[idx][i];
-                    }
-                    start++;
-                    end--;
-                    idx++;
+            for(int i=0; i<N; i++){
+                int range = Math.abs(N/2-i);
+                for(int j=range; j<N-range; j++){
+                    sum += arr[i][j];
                 }
             }
             

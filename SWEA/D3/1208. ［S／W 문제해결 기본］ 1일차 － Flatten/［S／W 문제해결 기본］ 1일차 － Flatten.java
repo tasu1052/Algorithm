@@ -19,24 +19,20 @@ public class Solution {
             for(int i=0; i<100; i++){//배열 내부 값 넣기
                 arr[i] = Integer.parseInt(st.nextToken());
             }
-
-            int diff = 0;
             
-            for(int i=0; i<dumpCount; i++){
-                find();
+            for(int i=0; i<dumpCount; i++){//최고-최저 찾는 로직
+                int diff = find();
                 arr[highIndex]--;
                 arr[lowIndex]++;
-                find();
-                
-                diff = arr[highIndex] - arr[lowIndex];
                 if(diff <= 1) break;
-            }//최고-최저 찾는 로직
+            }
+            int diff = find();
             
             sb.append("#").append(t).append(" ").append(diff).append('\n');
         }
         System.out.print(sb);
     }
-    static void find(){//최고, 최저점 인덱스 및 값 찾는 로직
+    static int find(){//최고, 최저점 인덱스 및 값 찾는 로직
         int high = Integer.MIN_VALUE;
         int low = Integer.MAX_VALUE;
         
@@ -50,5 +46,6 @@ public class Solution {
                 lowIndex = i;
             }
         }
+        return high - low;
     }
 }

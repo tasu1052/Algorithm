@@ -21,6 +21,7 @@ public class Main {
 
             if(num == M){
                 count++;
+                start_index++;
                 end_index--;
             }
             else if(num < M){

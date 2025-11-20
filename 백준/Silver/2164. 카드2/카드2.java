@@ -1,27 +1,21 @@
 import java.io.*;
 import java.util.*;
-
-public class Main{
-    public static void main(String[] args) throws IOException{
-        
+  
+public class Main {
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
-        Deque<Integer> q = new LinkedList<>();
-        
+
         int N = Integer.parseInt(br.readLine());
-        //int[] arr = new int[N];
+
+        Queue<Integer> q = new ArrayDeque<>();
         
-        for(int i=0; i<N; i++){
-            q.offer(i+1);
+        for(int i=1; i<=N; i++) q.add(i);
+
+        while(q.size() != 1){
+            q.poll();
+            q.add(q.poll());
         }
-        
-        while(q.size()>1){
-            q.pop();
-            q.offer(q.pop());
-            
-            if(q.size()==1)
-                break;
-        }
-        System.out.print(q.peek());
+        System.out.print(q.poll());
     }
 }

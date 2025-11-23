@@ -8,13 +8,27 @@ class Main {
         StringBuilder sb = new StringBuilder();
         
         String s = br.readLine();
-        Character[] arr = new Character[s.length()];
-        for(int i=0; i<s.length(); i++) arr[i] = s.charAt(i);
+        int[] arr = new int[s.length()];
 
-        Arrays.sort(arr, (a, b) -> b - a);
+        for(int i=0; i<arr.length; i++){
+            arr[i] = s.charAt(i) - '0';
+        }
 
+        for(int i=0; i<arr.length; i++){
+            int max = 0;
+            int maxIdx = 0;
+            for(int j=i; j<arr.length; j++){
+                if(arr[j] >= max){
+                    max = arr[j];
+                    maxIdx = j;
+                }
+            }
+            int temp = arr[maxIdx];
+            arr[maxIdx] = arr[i];
+            arr[i] = temp;
 
-        for(Character c : arr) sb.append(c);
+            sb.append(arr[i]);
+        }
         System.out.print(sb);
     }
 }

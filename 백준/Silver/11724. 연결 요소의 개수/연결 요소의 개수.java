@@ -15,8 +15,8 @@ class Main {
 
         A = new ArrayList[N+1];
         visited = new boolean[N+1];
-
-        for(int i=1; i<=N; i++){
+        
+        for(int i=1; i<N+1; i++){
             A[i] = new ArrayList<Integer>();
         }
 
@@ -38,11 +38,12 @@ class Main {
         System.out.print(count);
     }
     static void dfs(int v){
-        if(visited[v]) return;
-
         visited[v] = true;
         for(int i : A[v]){
-            if(!visited[i]) dfs(i);
-        }  
+            if(!visited[i]){
+                visited[i] = true;
+                dfs(i);
+            }
+        }
     }
 }

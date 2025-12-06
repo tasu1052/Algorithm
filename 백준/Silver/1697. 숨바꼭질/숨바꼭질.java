@@ -2,7 +2,6 @@ import java.io.*;
 import java.util.*;
 
 public class Main{
-    static int N, M;
     static int[] arr = new int[100001];
     static boolean[] visited = new boolean[100001];
     static StringBuilder sb = new StringBuilder();

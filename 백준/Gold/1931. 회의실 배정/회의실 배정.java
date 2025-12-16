@@ -8,32 +8,40 @@ public class Main {
         StringBuilder sb = new StringBuilder();
 
         int N = Integer.parseInt(br.readLine());
-        PriorityQueue<Pair> pq = new PriorityQueue<>(
-            (a, b) -> a.second != b.second ? a.second - b.second : a.first - b.first
-        );
 
-        String[] tokens;
+        PriorityQueue<Meeting> q = new PriorityQueue<>((a, b) -> {
+            if(a.end == b.end) return a.start - b.start;
+            return a.end - b.end;
+        });
+
         for(int i=0; i<N; i++){
-            tokens = br.readLine().split(" ");
-            int f = Integer.parseInt(tokens[0]);
-            int s = Integer.parseInt(tokens[1]);
-            pq.add(new Pair(f, s));
+            st = new StringTokenizer(br.readLine());
+            
+            int s = Integer.parseInt(st.nextToken());
+            int e = Integer.parseInt(st.nextToken());
+
+            q.add(new Meeting(s, e));
         }
 
-        int idx;
-        int count =0;
+        int cnt = 1;
+        int startTime = q.poll().end;
         
-        while(!pq.isEmpty()){
-            idx = pq.poll().second;
-            count++;
-            while(!pq.isEmpty() && idx>pq.peek().first) pq.poll();
+        while(!q.isEmpty()){
+            Meeting cur = q.poll();
+            if(startTime <= cur.start){
+                startTime = cur.end;
+                cnt++;
+            }
         }
-
-        System.out.print(count);
+        System.out.print(cnt);
     }
 }
+class Meeting{
+    int start;
+    int end;
 
-class Pair{
-    int first, second;
-    Pair(int f, int s){first = f; second = s;}
+    public Meeting(int start, int end){
+        this.start = start;
+        this.end = end;
+    }
 }

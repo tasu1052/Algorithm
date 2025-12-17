@@ -18,7 +18,7 @@ public class Main {
         for(int i=0; i<N; i++) city[i] = Integer.parseInt(st.nextToken());
 
         long cost = 0;
-        int minPrice = city[0];
+        long minPrice = city[0];
 
         for(int i=0; i<N-1; i++){
             minPrice = Math.min(minPrice, city[i]);

@@ -1,39 +1,38 @@
 import java.io.*;
 import java.util.*;
 
-public class Main {
+public class Main{
+    static ArrayList<Integer> A[];
     static int[] color;
-    static ArrayList<Integer>[] A;
-    static StringBuilder sb = new StringBuilder();
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st;
-        
+        StringBuilder sb = new StringBuilder();
 
         int K = Integer.parseInt(br.readLine());
 
-        for(int k=0; k<K; k++){
+        for(int i=0; i<K; i++){
             st = new StringTokenizer(br.readLine());
-            int V = Integer.parseInt(st.nextToken());
-            int E = Integer.parseInt(st.nextToken());
+            int v = Integer.parseInt(st.nextToken());
+            int e = Integer.parseInt(st.nextToken());
 
-            A = new ArrayList[V+1];
-            color = new int[V+1];
-            
-            for(int i=0; i<=V; i++) A[i] = new ArrayList<Integer>();
+            A = new ArrayList[v+1];
+            for(int j=0; j<=v; j++) A[j] = new ArrayList<>();
+            color = new int[v+1];
 
-            for(int i=0; i<E; i++){
+            for(int j=0; j<e; j++){
                 st = new StringTokenizer(br.readLine());
-                int s = Integer.parseInt(st.nextToken());
-                int e = Integer.parseInt(st.nextToken());
-                A[s].add(e);
-                A[e].add(s);
+                int S = Integer.parseInt(st.nextToken());
+                int E = Integer.parseInt(st.nextToken());
+
+                A[S].add(E);
+                A[E].add(S);
             }
 
             boolean check = true;
-            for(int i=0; i<=V; i++){
-                if(color[i] == 0){
-                    if(!bfs(i)){
+            for(int j=0; j<=v; j++){
+                if(color[j] == 0){
+                    if(!bfs(j)){
                         check = false;
                         break;
                     }
@@ -43,24 +42,23 @@ public class Main {
             if(check) sb.append("YES\n");
             else sb.append("NO\n");
         }
+        
         System.out.print(sb);
     }
-    static boolean bfs(int start){
+    static boolean bfs(int start) {
         Queue<Integer> q = new LinkedList<>();
+        color[start] = -1;
         q.add(start);
-        color[start] = 1;
 
         while(!q.isEmpty()){
             int cur = q.poll();
 
             for(int next : A[cur]){
                 if(color[next] == 0){
-                    color[next] = -color[cur];
+                    color[next] = color[cur] * -1;
                     q.add(next);
                 }
-                else if(color[next] == color[cur]){
-                    return false;
-                }
+                else if(color[next] == color[cur]) return false;
             }
         }
         return true;

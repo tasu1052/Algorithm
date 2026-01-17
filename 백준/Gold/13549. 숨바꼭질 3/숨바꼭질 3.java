@@ -12,16 +12,8 @@ public class Main{
     	int V = Integer.parseInt(st.nextToken());
     	int K = Integer.parseInt(st.nextToken());
 
-        ArrayList<Node> list[] = new ArrayList[max + 1];
-        for(int i=0; i<=max; i++) list[i] = new ArrayList<>();
         int[] dist = new int[max + 1];
         Arrays.fill(dist, Integer.MAX_VALUE);
-
-        for(int i=0; i<=max; i++){
-            if(i*2 <= max) list[i].add(new Node(i*2, 0));
-            if(i+1 <= max) list[i].add(new Node(i+1, 1));
-            if(i-1 >= 0) list[i].add(new Node(i-1, 1));
-        }
 
         PriorityQueue<Node> q = new PriorityQueue<>();
         dist[V] = 0;
@@ -32,10 +24,22 @@ public class Main{
 
             if(now.value > dist[now.to]) continue;
 
-            for(Node next : list[now.to]){
-                if(dist[next.to] > dist[now.to] + next.value){
-                    dist[next.to] = dist[now.to] + next.value;
-                    q.offer(new Node(next.to, dist[next.to]));
+            if(now.to * 2 <= max){
+                if(dist[now.to * 2] > dist[now.to]){
+                    dist[now.to * 2] = dist[now.to];
+                    q.offer(new Node(now.to * 2, dist[now.to * 2]));
+                }
+            }
+            if(now.to + 1 <= max){
+                if(dist[now.to + 1] > dist[now.to] + 1){
+                    dist[now.to + 1] = dist[now.to] + 1;
+                    q.offer(new Node(now.to + 1, dist[now.to + 1]));
+                }
+            }
+            if(now.to - 1 >= 0){
+                if(dist[now.to - 1] > dist[now.to] + 1){
+                    dist[now.to - 1] = dist[now.to] + 1;
+                    q.offer(new Node(now.to - 1, dist[now.to - 1]));
                 }
             }
         }

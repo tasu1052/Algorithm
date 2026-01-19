@@ -16,7 +16,7 @@ public class Main {
             Deque<Integer> q = new ArrayDeque<>();
 
             if (n > 0) {
-                s = s.substring(1, s.length() - 1); // [ ]
+                s = s.substring(1, s.length() - 1);
                 String[] arr = s.split(",");
                 for (String x : arr) {
                     q.add(Integer.parseInt(x));

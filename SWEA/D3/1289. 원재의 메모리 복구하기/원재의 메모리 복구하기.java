@@ -1,40 +1,35 @@
 import java.io.*;
 import java.util.*;
- 
+
 public class Solution {
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int T = Integer.parseInt(br.readLine());
-        StringBuilder sb = new StringBuilder();
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st;
+        StringBuilder sb = new StringBuilder();
+ 
+        int T = Integer.parseInt(br.readLine());
          
-        for(int t=1; t<=T; t++){
-            String answer =  br.readLine();
-            int[] answerMemory = new int[answer.length()];
-            int[] initailize = new int[answer.length()];
-
-            for(int i=0; i<answer.length(); i++){
-                answerMemory[i] = answer.charAt(i)-'0';
-            }
-
-            int checkIdx = 0;
-            int count = 0;
-            while(checkIdx<answer.length()){
-                if(initailize[checkIdx] != answerMemory[checkIdx]){
-                    for(int i=checkIdx; i<answer.length(); i++){
-                        if(initailize[i]==0) initailize[i] = 1;
-                        else initailize[i] = 0;
-                    }
-                    checkIdx++;
-                    count++;
+        for (int t = 1; t <= T; t++) {
+            String line = br.readLine();
+            int cnt = 0;
+            int[] ans = new int[line.length()];
+            for(int i=0; i<ans.length; i++) ans[i] = line.charAt(i) - '0';
+             
+            int[] arr = new int[ans.length];
+             
+            for(int i=0; i<ans.length; i++) {
+                if(arr[i] == ans[i]) continue;
+                 
+                for(int j=i; j<ans.length; j++) {
+                    if(arr[j] == 0) arr[j] = 1;
+                    else arr[j] = 0;
                 }
-                else{
-                    checkIdx++;
-                }
+                cnt++;
             }
-            
-            sb.append("#").append(t).append(" ").append(count).append('\n');
+             
+             
+            sb.append("#").append(t).append(" ").append(cnt).append("\n");
         }
         System.out.print(sb);
-    }
+	}
 }

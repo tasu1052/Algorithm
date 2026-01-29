@@ -11,22 +11,21 @@ public class Main {
 		int A = Integer.parseInt(st.nextToken());
 		int B = Integer.parseInt(st.nextToken());
 	
-		Queue<int[]> q = new ArrayDeque<>();
-		q.add(new int[] {A, 1});
+		int cnt = 1;
 		
-		while(!q.isEmpty()) {
-			int[] now = q.poll();
-			int value = now[0];
-			int cnt = now[1];
-			
-			if(value == B) {
-				System.out.println(cnt);
+		while(B > A) {
+			if(B % 10 ==1) {
+				B = (B - 1) / 10;
+			} else if(B % 2 == 0) {
+				B /= 2;
+			} else {
+				System.out.println(-1);
 				return;
 			}
-			
-			if((long)value * 2 <= B) q.add(new int[] {value * 2, cnt + 1});
-			if((long)value * 10 + 1 <= B) q.add(new int[] {value * 10 + 1, cnt + 1});
+			cnt++;
 		}
-		System.out.println(-1);
+		
+		if(B == A) System.out.println(cnt);
+		else System.out.println(-1);
 	}
 }

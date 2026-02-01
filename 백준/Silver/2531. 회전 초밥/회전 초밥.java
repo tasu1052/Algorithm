@@ -2,7 +2,6 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    static String[] cmd = {"D", "S", "L", "R"};
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st;
@@ -19,21 +18,27 @@ public class Main {
             sushi[i] = Integer.parseInt(br.readLine());
         }
 
-        int maxCnt = Integer.MIN_VALUE;
-        for (int i = 0; i < N; i++) {
-            HashMap<Integer, Integer> hm = new HashMap<>();
-            int tmp = 0;
-            for(int j = i, n = 0; n<k; j++, n++){
-                if(j >= N) j = 0;
-
-                hm.put(sushi[j], hm.getOrDefault(sushi[j], 0) + 1);
-
-            }
-            if(!hm.containsKey(c)) tmp = hm.size() + 1;
-            else tmp = hm.size();
-
-            maxCnt = Math.max(tmp, maxCnt);
+        int[] sushiCnt = new int[d+1];
+        int kind = 0;
+        for(int i=0; i<k; i++){
+            if(sushiCnt[sushi[i]] == 0) kind++;
+            sushiCnt[sushi[i]]++;
         }
-        System.out.println(maxCnt);
+
+        int max = kind + (sushiCnt[c] == 0 ? 1 : 0);
+
+        for(int i=1; i<N; i++){
+            int remove = sushi[i -1];
+            sushiCnt[remove]--;
+            if(sushiCnt[remove] == 0) kind--;
+
+            int add = sushi[(i + k -1) % N];
+            if(sushiCnt[add] == 0) kind++;
+            sushiCnt[add]++;
+
+            int now = kind + (sushiCnt[c] == 0 ? 1 : 0);
+            max = Math.max(max, now);
+        }
+        System.out.println(max);
     }
 }

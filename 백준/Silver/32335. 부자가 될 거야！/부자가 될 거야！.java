@@ -31,10 +31,7 @@ public class Main {
 				dial[i] = 0;
 			}
 			
-			if(i == N-1 && M > 0) {
-				dial[i] += M;
-				if(dial[i] >= 10) dial[i] %= 10;
-			}
+			if(i == N-1 && M > 0) dial[i] = (dial[i] + M) % 10;
 		}
 		for(int n : dial) sb.append(n);
 		System.out.println(sb);

@@ -27,8 +27,7 @@ public class Main {
 			
 			if(M >= gap) {
 				M -= gap;
-				dial[i] += gap;
-				if(dial[i] >= 10) dial[i] -= 10;
+				dial[i] = 0;
 			}
 			
 			if(i == N-1 && M > 0) {

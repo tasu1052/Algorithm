@@ -15,12 +15,6 @@ public class Main {
 		String s = br.readLine();
 		for(int i=0; i<N; i++) dial[i] = s.charAt(i) - '0';
 		
-		if(M == 0) {
-			for(int n : dial) sb.append(n);
-			System.out.println(sb);
-			return;
-		}
-		
 		for(int i=0; i<N; i++) {
 			if(dial[i] == 0 && i != N-1) continue;
 			

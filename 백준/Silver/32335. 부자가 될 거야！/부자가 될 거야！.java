@@ -16,7 +16,8 @@ public class Main {
 		for(int i=0; i<N; i++) dial[i] = s.charAt(i) - '0';
 		
 		if(M == 0) {
-			for(int n : dial) System.out.print(n);
+			for(int n : dial) sb.append(n);
+			System.out.println(sb);
 			return;
 		}
 		
@@ -35,6 +36,7 @@ public class Main {
 				if(dial[i] >= 10) dial[i] %= 10;
 			}
 		}
-		for(int n : dial) System.out.print(n);
+		for(int n : dial) sb.append(n);
+		System.out.println(sb);
 	}
 }

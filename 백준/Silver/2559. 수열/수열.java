@@ -2,30 +2,34 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st;
+	public static void main(String[] args) throws IOException{
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
+        StringTokenizer st;
         
         st = new StringTokenizer(br.readLine());
-
         int N = Integer.parseInt(st.nextToken());
         int K = Integer.parseInt(st.nextToken());
-
+        
+        int[] arr = new int[N];
         st = new StringTokenizer(br.readLine());
-        int[] prefix_sum = new int[N+1];
-
-        for(int i=1; i<=N; i++){
-            prefix_sum[i] = prefix_sum[i-1] + Integer.parseInt(st.nextToken());
-        }
-
+        for(int i=0; i<N; i++) arr[i] = Integer.parseInt(st.nextToken());
+        
         int max = Integer.MIN_VALUE;
-
-        for(int i=K; i<prefix_sum.length; i++){
-            int sum = prefix_sum[i] - prefix_sum[i-K];
-            max = Math.max(max, sum);
+        int sum = 0;
+        
+        for(int i=0; i<K; i++) {
+        	sum += arr[i];
+        	max = sum;
         }
+        
+        for(int i=K; i<N; i++) {
+        	sum += arr[i];
+        	sum -= arr[i - K];
+        	max = Math.max(max, sum);
+        }
+        
+        System.out.println(max);
+	}
 
-        System.out.print(max);
-    }
 }

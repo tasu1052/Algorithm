@@ -10,7 +10,7 @@ public class Main {
 
         String s = br.readLine();
 
-        Stack<Character> st = new Stack<>();
+        ArrayDeque<Character> st = new ArrayDeque<>();
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
             if (c == '(') {

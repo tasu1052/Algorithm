@@ -1,34 +1,40 @@
 import java.io.*;
 import java.util.*;
 
-public class Main{
-    public static void main(String[] args) throws IOException{
+public class Main {
+    static int N, M;
+    static int[] cards;
+    static int ans = Integer.MIN_VALUE;
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
+
+        st = new StringTokenizer(br.readLine());
+        N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
+
+        cards = new int[N];
+
+        st = new StringTokenizer(br.readLine());
+        for(int i=0; i<N; i++) cards[i] = Integer.parseInt(st.nextToken());
+
+        dfs(0, 0, 0);
+
+        System.out.print(ans);
+    }
+    static void dfs(int start, int cnt, int sum){
+        if(sum > M) return;
         
-        StringTokenizer st = new StringTokenizer(br.readLine(), " ");
-        int N = Integer.parseInt(st.nextToken());
-        int M = Integer.parseInt(st.nextToken());
-        
-        st = new StringTokenizer(br.readLine(), " ");
-        
-        int[] arr = new int[N];
-        int index=0;
-        
-        while(st.hasMoreTokens()){
-            arr[index++]=Integer.parseInt(st.nextToken());
+        if(cnt == 3){
+            ans = Math.max(ans, sum);
+            return;
         }
         
-        int max=0;
-        
-        for(int i=0; i<arr.length; i++){
-            for(int j=i+1;j<arr.length; j++){
-                for(int k=j+1;k<arr.length; k++){
-                    if(((arr[i]+arr[j]+arr[k])<=M)&&(arr[i]+arr[j]+arr[k])>max){
-                        max=arr[i]+arr[j]+arr[k];
-                    }
-                }
-            }
+        if(N - start < 3 - cnt) return;
+
+
+        for(int i=start; i<N; i++){
+            dfs(i + 1, cnt + 1, sum + cards[i]);
         }
-        System.out.print(max);
     }
 }

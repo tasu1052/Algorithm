@@ -52,24 +52,24 @@ public class Main {
         pick[idx] = false;
         dfs(idx + 1, cnt);
     }
+
     static int calCityDist(){
         int sum = 0;
 
         for(Pos h : houses){
-            int best = Integer.MAX_VALUE;
+            int bestDist = Integer.MAX_VALUE;
 
             for(int i=0; i<chickens.size(); i++){
                 if(!pick[i]) continue;
                 Pos c = chickens.get(i);
                 int d = Math.abs(h.x - c.x) + Math.abs(h.y - c.y);
-                if(d < best) best = d;
+                if(d < bestDist) bestDist = d;
             }
 
-            sum += best;
+            sum += bestDist;
 
             if(sum >= ans) return sum;
         }
-
         return sum;
     }
 }

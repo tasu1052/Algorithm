@@ -37,6 +37,8 @@ public class Solution {
         System.out.print(sb);
     }
     static void dfs(int start, int cnt){
+        if(ans == 0) return;
+        
         if(cnt == N/2){
             int firstFood = 0, secondFood = 0;
 
@@ -52,7 +54,7 @@ public class Solution {
             }
 
             ans = Math.min(ans, Math.abs(firstFood - secondFood));
-            
+            return;
         }
 
         for(int i=start; i<N; i++){

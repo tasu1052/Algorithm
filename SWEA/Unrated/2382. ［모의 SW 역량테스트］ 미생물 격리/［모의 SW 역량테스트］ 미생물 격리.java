@@ -16,20 +16,18 @@ public class Solution {
         int T = Integer.parseInt(br.readLine().trim());
         for (int tc = 1; tc <= T; tc++) {
             StringTokenizer st = new StringTokenizer(br.readLine());
-            N = Integer.parseInt(st.nextToken()); // 셀 크기
-            M = Integer.parseInt(st.nextToken()); // 격리 시간
-            K = Integer.parseInt(st.nextToken()); // 군집 수
+            N = Integer.parseInt(st.nextToken());
+            M = Integer.parseInt(st.nextToken());
+            K = Integer.parseInt(st.nextToken());
 
-            q = new ArrayDeque<>();
+            q = new ArrayDeque<>(K);
 
             for (int i = 0; i < K; i++) {
                 st = new StringTokenizer(br.readLine());
                 int r = Integer.parseInt(st.nextToken());
                 int c = Integer.parseInt(st.nextToken());
                 int num = Integer.parseInt(st.nextToken());
-                int dir = Integer.parseInt(st.nextToken());
-
-                dir--;
+                int dir = Integer.parseInt(st.nextToken()) - 1;
 
                 q.add(new Micro(r, c, num, dir));
             }
@@ -44,9 +42,8 @@ public class Solution {
 
     static void simulate() {
         for (int t = 0; t < M; t++) {
-            int[][] sum = new int[N][N];      // 그 칸에 모인 총 미생물 수
-            int[][] max = new int[N][N];      // 그 칸에 모인 군집 중 최대 미생물 수
-            int[][] dirKeep = new int[N][N];  // 최대 군집의 방향
+            Micro[][] next = new Micro[N][N];
+            int[][] max = new int[N][N]; 
 
             int size = q.size();
             for (int s = 0; s < size; s++) {
@@ -64,19 +61,22 @@ public class Solution {
                     if (num == 0) continue;
                 }
 
-                sum[nx][ny] += num;
-
-                if (num > max[nx][ny]) {
+                if (next[nx][ny] == null) {
+                    next[nx][ny] = new Micro(nx, ny, num, dir);
                     max[nx][ny] = num;
-                    dirKeep[nx][ny] = dir;
+                } else {
+                    next[nx][ny].num += num;
+
+                    if (num > max[nx][ny]) {
+                        max[nx][ny] = num;
+                        next[nx][ny].dir = dir;
+                    }
                 }
             }
 
             for (int i = 0; i < N; i++) {
                 for (int j = 0; j < N; j++) {
-                    if (sum[i][j] > 0) {
-                        q.add(new Micro(i, j, sum[i][j], dirKeep[i][j]));
-                    }
+                    if (next[i][j] != null) q.add(next[i][j]);
                 }
             }
         }

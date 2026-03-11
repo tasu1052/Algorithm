@@ -2,7 +2,6 @@ import java.io.*;
 import java.util.*;
 
 public class Solution {
-	static int[] parent;
 	static double ans;
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -26,30 +25,41 @@ public class Solution {
         	
         	double E = Double.parseDouble(br.readLine());
         	
-        	ArrayList<Island> arr = new ArrayList<>();
+        	ArrayList<Island>[] arr = new ArrayList[N];
+        	for(int i=0; i<N; i++) arr[i] = new ArrayList<>();
+        	
         	for(int i=0; i<N-1; i++) {
-        		for(int j=i; j<N; j++) {
+        		for(int j=i+1; j<N; j++) {
         			double sum = E * (Math.pow(x[i] - x[j], 2) + Math.pow(y[i] - y[j], 2));
-        			arr.add(new Island(i, j, sum));
+        			arr[i].add(new Island(j, sum));
+        			arr[j].add(new Island(i, sum));
         		}
         	}
         	
-        	parent = new int[N];
-        	for(int i=0; i<N; i++) parent[i] = i;
-        	
-            Collections.sort(arr);
+        	boolean[] visited = new boolean[N];
+            PriorityQueue<Island> q = new PriorityQueue<>();
             
-            int edgeCnt = 0;
-            int idx = 0;
+            int cnt = 0;
             ans = 0.0;
             
-            while(edgeCnt != N-1) {
-            	Island tmp = arr.get(idx++);
+            q.add(new Island(0, 0));
+            
+            while(!q.isEmpty()) {
+            	Island tmp = q.poll();
             	
-            	if(find(tmp.from) != find(tmp.to)) {
-            		union(tmp.from, tmp.to);
-            		edgeCnt++;
-            		ans += tmp.weight;
+            	if(visited[tmp.to]) continue;
+            	
+            	visited[tmp.to] = true;
+            	ans += tmp.weight;
+            	cnt++;
+            	
+            	
+            	if(cnt == N) break;
+            	
+            	for(Island next : arr[tmp.to]) {
+            		if(!visited[next.to]) {
+            			q.add(new Island(next.to, next.weight));
+            		}
             	}
             }
             
@@ -58,22 +68,12 @@ public class Solution {
 
         System.out.print(sb);
     }
-    static void union(int a, int b) {
-    	a = find(a);
-    	b = find(b);
-    	if(a != b) parent[b] = a;
-    }
-    static int find(int x) {
-    	if(x == parent[x]) return x;
-    	return parent[x] = find(parent[x]);
-    }
 }
 class Island implements Comparable<Island>{
-	int from, to;
+	int to;
 	double weight;
 	
-	Island(int from, int to, double weight){
-		this.from = from;
+	Island(int to, double weight){
 		this.to = to;
 		this.weight = weight;
 	}

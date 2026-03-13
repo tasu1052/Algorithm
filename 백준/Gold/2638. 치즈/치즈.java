@@ -32,7 +32,6 @@ public class Main {
 		System.out.println(ans);
 	}
 	static void dfs(int[][] map, int time) {
-		
 		if(isClear(map)) {
 			ans = time;
 			return;
@@ -53,27 +52,13 @@ public class Main {
 		
 		dfs(map, time + 1);
 	}
-	static void melt() {
+	static boolean isClear(int[][] map) {
 		for(int i=1; i<N-1; i++) {
 			for(int j=1; j<M-1; j++) {
-				if(needMelt[i][j]) {
-					map[i][j] = 0;
-				}
+				if(map[i][j] == 1) return false;
 			}
 		}
-	}
-	static void checkMelt(int i, int j) {
-		int cnt = 0;
-		
-		for(int k=0; k<4; k++) {
-			int nx = i + dx[k], ny = j + dy[k];
-			
-			if(map[nx][ny] == 0 && check[nx][ny]) cnt++;
-		}
-		
-		if(cnt >= 2) {
-			needMelt[i][j] = true;
-		}
+		return true;
 	}
 	static void markOuterAir() {
 	    check = new boolean[N][M];
@@ -97,12 +82,26 @@ public class Main {
 	        }
 	    }
 	}
-	static boolean isClear(int[][] map) {
+	static void checkMelt(int i, int j) {
+		int cnt = 0;
+		
+		for(int k=0; k<4; k++) {
+			int nx = i + dx[k], ny = j + dy[k];
+			
+			if(map[nx][ny] == 0 && check[nx][ny]) cnt++;
+		}
+		
+		if(cnt >= 2) {
+			needMelt[i][j] = true;
+		}
+	}
+	static void melt() {
 		for(int i=1; i<N-1; i++) {
 			for(int j=1; j<M-1; j++) {
-				if(map[i][j] == 1) return false;
+				if(needMelt[i][j]) {
+					map[i][j] = 0;
+				}
 			}
 		}
-		return true;
 	}
 }

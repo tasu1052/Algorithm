@@ -25,6 +25,7 @@ public class Main {
         	if(isBot[N-1]) isBot[N-1] = false; //이때 로봇이 N-1 도달하면 바로 내리기
         	
         	move(belt); //2.가장 먼저 올라간 로봇부터 한 칸씩 이동, 이동 안되면 가만히
+        	if(isBot[N-1]) isBot[N-1] = false; //이때 로봇이 N-1 도달하면 바로 내리기
         	
         	if(belt[0] > 0 && !isBot[0]) { //3.올리는 칸 내구도 0 아니면 로봇 올리기
         		isBot[0] = true;

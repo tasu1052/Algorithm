@@ -26,7 +26,7 @@ public class Main {
         
         System.out.println(sb);
     }
-    static void dfs(int idx, int cnt) {
+    static void dfs(int start, int cnt) {
     	if(cnt == 6) {
     		for(int i=0; i<k; i++) {
     			if(v[i]) {
@@ -36,13 +36,12 @@ public class Main {
     		sb.append('\n');
     		return;
     	}
+
     	
-    	if(idx >= k) return;
-    	
-    	v[idx] = true;
-    	dfs(idx + 1, cnt + 1);
-    	
-    	v[idx] = false;
-    	dfs(idx + 1, cnt);
+    	for(int i=start; i<k; i++) {
+    	    v[i] = true;
+    	    dfs(i + 1, cnt + 1);
+    	    v[i] = false;
+    	}
     }
 }

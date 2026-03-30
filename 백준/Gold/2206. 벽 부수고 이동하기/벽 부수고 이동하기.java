@@ -1,14 +1,14 @@
 import java.io.*;
+import java.lang.reflect.Field;
 import java.util.*;
 
 public class Main {
+    static int N, M;
+    static int[][] map;
+    static int[][][] dist;
     static int[] dx = {0, 1, 0, -1};
     static int[] dy = {1, 0, -1, 0};
-    static int[][] map;
-    static boolean[][][] visited;
-    static int[][][] dist;
-    static int N, M;
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st;
         StringBuilder sb = new StringBuilder();
@@ -18,53 +18,51 @@ public class Main {
         M = Integer.parseInt(st.nextToken());
 
         map = new int[N][M];
-        visited = new boolean[N][M][2];
         dist = new int[N][M][2];
-
-        for (int i=0; i<N; i++) {
-            for(int j=0; j<M; j++)
+        for(int i = 0; i < N; i++){
+            for(int j = 0; j < M; j++){
                 Arrays.fill(dist[i][j], -1);
-        }
-        
-        for(int i=0; i<N; i++){
-            String s = br.readLine();
-            for(int j=0; j<M; j++){
-                map[i][j] = s.charAt(j) - '0';
             }
         }
 
-        bfs(0, 0);
-        int a = dist[N-1][M-1][0];
-        int b = dist[N-1][M-1][1];
+        for(int i = 0; i < N; i++){
+            String line = br.readLine();
+            for(int j = 0; j < M; j++){
+                map[i][j] = line.charAt(j) - '0';
+            }
+        }
 
-        if (a == -1 && b == -1) System.out.println(-1);
-        else if (a == -1) System.out.println(b);
-        else if (b == -1) System.out.println(a);
-        else System.out.println(Math.min(a, b));
+        bfs();
+
+        int ans = Integer.MAX_VALUE;
+        for(int i=0; i<2; i++){
+            if(dist[N-1][M-1][i] != -1) ans = Math.min(ans, dist[N-1][M-1][i]);
+        }
+
+        System.out.println(ans != Integer.MAX_VALUE ? ans : -1);
     }
-    static void bfs(int i, int j){
-        Queue<int[]> q =new LinkedList<>();
-        q.add(new int[]{i, j, 0});
-        visited[i][j][0] = true;
+    static void bfs(){
+        ArrayDeque<int[]> q = new ArrayDeque<>();
+        q.add(new int[]{0, 0, 0});
         dist[0][0][0] = 1;
 
         while(!q.isEmpty()){
-            int[] now = q.poll();
+            int[] now  = q.poll();
+            int x =  now[0], y = now[1], broken = now[2];
+
             for(int k=0; k<4; k++){
-                int x = now[0] + dx[k];
-                int y = now[1] + dy[k];
-                int broken = now[2];
-                if(x>=0 && y>=0 && x<N && y<M){
-                    if(map[x][y] == 0 && !visited[x][y][broken]){
-                        visited[x][y][broken] = true;
-                        dist[x][y][broken] = dist[now[0]][now[1]][broken] + 1;
-                        q.add(new int[]{x, y, broken});
-                    }
-                    if(map[x][y] == 1 && broken == 0 && !visited[x][y][1]){
-                        visited[x][y][1] = true;
-                        dist[x][y][1] = dist[now[0]][now[1]][0] + 1;
-                        q.add(new int[]{x, y, 1});
-                    }
+                int nx = x + dx[k], ny =  y + dy[k];
+
+                if(nx < 0 || nx >= N || ny < 0 || ny >= M) continue;
+
+                if(map[nx][ny] == 0 && dist[nx][ny][broken] == -1){
+                    dist[nx][ny][broken] = dist[x][y][broken] + 1;
+                    q.add(new int[]{nx, ny, broken});
+                }
+
+                if(map[nx][ny] == 1 && broken == 0 && dist[nx][ny][broken] == -1){
+                    dist[nx][ny][broken+1] = dist[x][y][broken] + 1;
+                    q.add(new int[]{nx, ny, broken + 1});
                 }
             }
         }

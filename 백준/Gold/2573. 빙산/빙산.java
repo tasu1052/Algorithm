@@ -65,8 +65,7 @@ public class Main {
     		System.out.println(year);
     		return;
     	}
-    	
-    	if(empty()) { //빙하가 분리 안된 상태에서 전부 녹았다면 0출력 후 종료
+    	else if(icebergNum == 0) { //빙하가 분리 안된 상태에서 전부 녹았다면 0출력 후 종료
     		System.out.println(0);
     		return;
     	}
@@ -110,13 +109,5 @@ public class Main {
     		}
     		
     	}
-    }
-    static boolean empty() { //모든 빙하가 전부 녹았다면 true반환하는 함수
-    	for(int i=0; i<N; i++) {
-        	for(int j=0; j<M; j++) {
-        		if(map[i][j] != 0) return false;
-        	}
-        }
-    	return true;
     }
 }

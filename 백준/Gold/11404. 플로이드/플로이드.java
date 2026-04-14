@@ -1,52 +1,48 @@
 import java.io.*;
 import java.util.*;
 
-public class Main{
-    public static void main(String args[]) throws IOException{
+public class Main {
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st;
         StringBuilder sb = new StringBuilder();
+        StringTokenizer st;
 
-    	int N = Integer.parseInt(br.readLine());
-    	int M = Integer.parseInt(br.readLine());
+        int n =  Integer.parseInt(br.readLine());
+        int m =  Integer.parseInt(br.readLine());
 
-        int INF = Integer.MAX_VALUE;
-
-        long[][] dist = new long[N+1][N+1];
-        for(int i=1; i<=N; i++) {
-            Arrays.fill(dist[i], INF);
+        long[][] dist = new long[n+1][n+1];
+        for(int i=0; i<=n; i++){
+            Arrays.fill(dist[i], Integer.MAX_VALUE);
             dist[i][i] = 0;
         }
 
-        for(int i=0; i<M; i++){
+        for(int i=0; i<m; i++){
             st = new StringTokenizer(br.readLine());
             int s = Integer.parseInt(st.nextToken());
             int e = Integer.parseInt(st.nextToken());
-            int w = Integer.parseInt(st.nextToken());
+            int c = Integer.parseInt(st.nextToken());
 
-            dist[s][e] = Math.min(dist[s][e], w);
+            dist[s][e] = Math.min(dist[s][e], c);
         }
 
-        for(int k=1; k<=N; k++){
-            for(int i=1; i<=N; i++){
-                for(int j=1; j<=N; j++){
-                    if(dist[i][k] != INF && dist[k][j] != INF)
+        for(int k=1; k<=n; k++){
+            for(int i=1; i<=n; i++){
+                for(int j=1; j<=n; j++){
+                    if(dist[i][k] != Integer.MAX_VALUE && dist[k][j] != Integer.MAX_VALUE){
                         dist[i][j] = Math.min(dist[i][j], dist[i][k] + dist[k][j]);
+                    }
                 }
             }
         }
 
-        for(int i=1; i<=N; i++){
-            for(int j=1; j<=N; j++){
-                if(dist[i][j] == INF){
-                    sb.append(dist[i][j] == INF ? 0 : dist[i][j]).append(" ");
-                    continue;
-                }
-                sb.append(dist[i][j] + " ");
+        for(int i=1; i<=n; i++){
+            for(int j=1; j<=n; j++){
+                if(dist[i][j] == Integer.MAX_VALUE) sb.append(0).append(" ");
+                else sb.append(dist[i][j]).append(" ");
             }
             sb.append('\n');
         }
 
-        System.out.print(sb);
+        System.out.println(sb);
     }
 }

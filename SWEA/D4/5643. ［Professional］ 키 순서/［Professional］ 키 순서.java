@@ -1,5 +1,4 @@
 import java.io.*;
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class Solution {
@@ -17,58 +16,39 @@ public class Solution {
             N = Integer.parseInt(br.readLine());
             M = Integer.parseInt(br.readLine());
             
-            A = new ArrayList[N+1];
-            for(int i=0; i<=N; i++) A[i] = new ArrayList<>();
-            
-            B = new ArrayList[N+1];
-            for(int i=0; i<=N; i++) B[i] = new ArrayList<>();
-            
-            ans = 0;
+            boolean[][] graph = new boolean[N+1][N+1];
             
             for(int i=0; i<M; i++) {
             	st = new StringTokenizer(br.readLine());
-            	int s = Integer.parseInt(st.nextToken());
-            	int e = Integer.parseInt(st.nextToken());
-            	
-            	A[s].add(e);
-            	B[e].add(s);
+            	int a = Integer.parseInt(st.nextToken());
+            	int b = Integer.parseInt(st.nextToken());
+            	graph[a][b] = true;
             }
             
-            for(int i=1; i<=N; i++) {
-            	boolean[] v = new boolean[N+1];
-            	
-            	bfs(i, v, A);
-            	bfs(i, v, B);
-            	
-            	boolean check = true;
-            	for(int j=1; j<=N; j++) {
-            		if(!v[j]) {
-            			check = false;
-            			break;
+            for(int k=1; k<=N; k++) {
+            	for(int i=1; i<=N; i++) {
+            		for(int j=1; j<=N; j++) {
+            			if(graph[i][k] && graph[k][j]) {
+            				graph[i][j] = true;
+            			}
             		}
             	}
+            }
+            
+            int ans = 0;
+            
+            for(int i=1; i<=N; i++) {
+            	int count = 0;
             	
-            	if(check) ans++;
+            	for(int j=1; j<=N; j++) {
+            		if(i==j) continue;
+            		if(graph[i][j] || graph[j][i]) count++;
+            	}
+            	if(count == N-1) ans++;
             }
             sb.append('#').append(tc).append(' ').append(ans).append('\n');
         }
 
         System.out.print(sb);
-    }
-    static void bfs(int start, boolean[] v, ArrayList<Integer>[] list) {
-    	ArrayDeque<Integer> q = new ArrayDeque<>();
-    	q.add(start);
-    	v[start] = true;
-    	
-    	while(!q.isEmpty()) {
-    		int now = q.poll();
-    		
-    		for(int next : list[now]) {
-	    			if(!v[next]) {
-	    			v[next] = true;
-	    			q.add(next);
-	    		}
-    		}
-    	}
     }
 }

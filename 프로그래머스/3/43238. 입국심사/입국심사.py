@@ -1,24 +1,22 @@
 def solution(n, times):
     times.sort()
-    
-    start = 1
-    end = times[-1] * n
     result = 0
     
-    while start <= end:
-        mid = (start + end) // 2
-        sum = 0
+    left = 1
+    right = times[-1] * n
+    
+    while left <= right:
+        mid = (left + right) // 2
+        total = 0
         
         for i in range(len(times)):
-            sum += mid // times[i]
-            
-            if sum >= n:
+            total += mid // times[i]
+            if total >= n:
                 break
-        
-        if sum >= n:
-            end = mid -1
+                
+        if total >= n:
+            right = mid -1
             result = mid
         else:
-            start = mid + 1
-            
+            left = mid +1
     return result

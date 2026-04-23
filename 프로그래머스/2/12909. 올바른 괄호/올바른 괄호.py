@@ -1,19 +1,16 @@
 from collections import deque
-
 def solution(s):
-    
-    q = deque()
+    st = deque()
     
     for ch in s:
-        if ch == '(':
-            q.append(ch)
+        if ch == "(":
+            st.append(ch)
         else:
-            if not q:
-                return False
+            if st:
+                st.pop()
             else:
-                q.pop()
-            
-    if q:
+                return False
+                
+    if st:
         return False
-
     return True

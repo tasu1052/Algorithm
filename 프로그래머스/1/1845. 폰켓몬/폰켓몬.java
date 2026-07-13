@@ -11,8 +11,7 @@ class Solution {
         int answer = 0;
         int idx = 0;
         for(int key : hm.keySet()){
-            idx++;
-            if(idx > nums.length / 2) break;
+            if(answer >= nums.length / 2) break;
             answer++;
         }
         return answer;

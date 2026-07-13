@@ -9,7 +9,7 @@ class Solution {
         }
         
         for(int i=0; i<completion.length; i++){
-            hm.put(completion[i], hm.getOrDefault(completion[i], 0) - 1);
+            hm.put(completion[i], hm.get(completion[i]) - 1);
             if(hm.get(completion[i]) <= 0) hm.remove(completion[i]);
         }
         
@@ -18,7 +18,6 @@ class Solution {
         for(String key : hm.keySet()){
             answer = key;
         }
-        
         return answer;
     }
 }

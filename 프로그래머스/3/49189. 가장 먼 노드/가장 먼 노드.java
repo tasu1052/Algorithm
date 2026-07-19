@@ -1,16 +1,20 @@
 import java.util.*;
+
 class Solution {
     public int solution(int n, int[][] edge) {
-        ArrayList<Integer>[] A;
-        A = new ArrayList[n+1];
-        for(int i=0; i<=n; i++) A[i] = new ArrayList<>();
+        ArrayList<Integer>[] list;
+        list = new ArrayList[n+1];
+        
+        for(int i=0; i<=n; i++){
+            list[i] = new ArrayList<>();
+        }
         
         for(int i=0; i<edge.length; i++){
             int s = edge[i][0];
             int e = edge[i][1];
             
-            A[s].add(e);
-            A[e].add(s);
+            list[s].add(e);
+            list[e].add(s);
         }
         
         int[] dist = new int[n+1];
@@ -23,23 +27,23 @@ class Solution {
         while(!q.isEmpty()){
             int now = q.poll();
             
-            for(int next : A[now]){
+            for(int next : list[now]){
                 if(!visited[next]){
-                    dist[next] = dist[now]  + 1;
-                    q.add(next);
                     visited[next] = true;
+                    dist[next] = dist[now] + 1;
+                    q.add(next);
                 }
             }
         }
         
-        int max = 0;
+        int max = Integer.MIN_VALUE;
         for(int i=1; i<=n; i++){
             max = Math.max(max, dist[i]);
         }
         
         int answer = 0;
         for(int i=1; i<=n; i++){
-            if(max == dist[i]) answer++;
+            if(dist[i] == max) answer++;
         }
         return answer;
     }

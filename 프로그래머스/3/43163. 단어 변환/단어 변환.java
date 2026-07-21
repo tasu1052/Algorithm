@@ -13,12 +13,12 @@ class Solution {
             }
         }
         
-        if(check) dfs(0, 0, begin, target, words);
+        if(check) dfs(0, begin, target, words);
         else answer = 0;
         
         return answer;
     }
-    static void dfs(int idx, int cnt, String cur, String target, String[] words){
+    static void dfs(int cnt, String cur, String target, String[] words){
         if(cur.equals(target)){
             answer = Math.min(answer, cnt);
             return;
@@ -35,7 +35,7 @@ class Solution {
             }
             if(n == cur.length() - 1){
                 selected[i] = true;
-                dfs(idx + 1, cnt + 1, words[i], target, words);
+                dfs(cnt + 1, words[i], target, words);
                 selected[i] = false;
             }
         }

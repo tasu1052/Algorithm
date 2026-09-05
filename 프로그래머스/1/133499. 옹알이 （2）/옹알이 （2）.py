@@ -1,18 +1,20 @@
 def solution(babbling):
-    #babbling 순회하고 그 단어 슬라이싱하면서
-    #어떤 단어 만들어지면 ok 그 단어 전부 ok면 answer += 1
-    dic = {'a' : 'aya',
-           'y' : 'ye',
-           'w' : 'woo',
-           'm' : 'ma'}
+    #딕셔너리에 알파벳들 적어놓고
+    #babbling 순회하면서 되는지 검사
+    #검사 중에 안되면 바로 다음꺼 넘어가고 검사 통과 시 answer++
+    words = {'a' : 'aya',
+             'y' : 'ye',
+             'w' : 'woo',
+             'm' : 'ma'}
+    
     answer = 0
-
+    
     for bab in babbling:
         idx = 0
         prev = ''
         
         while idx < len(bab):
-            target = dic.get(bab[idx], '')
+            target = words.get(bab[idx], '')
             
             if target == '':
                 break
@@ -21,23 +23,23 @@ def solution(babbling):
                 break
                 
             flag = True
-            
+                
             for i in range(len(target)):
                 if idx + i >= len(bab):
                     flag = False
                     break
-                    
-                if target[i] != bab[idx+i]:
+                if target[i] != bab[idx + i]:
                     flag = False
                     break
             
             if not flag:
                 break
-                
+            
             prev = target
             idx += len(target)
             
-        if idx == len(bab):    
+        if idx == len(bab):
             answer += 1
+            
                 
     return answer

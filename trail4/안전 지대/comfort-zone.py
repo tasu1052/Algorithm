@@ -1,18 +1,20 @@
-import sys
-sys.setrecursionlimit(100000)
-
 def dfs(x, y, k):
+    stack = [(x, y)]
     visited[x][y] = True
 
-    for d in range(4):
-        nx, ny = x + dx[d], y + dy[d]
+    while stack:
+        x, y = stack.pop()
 
-        if nx < 0 or nx >= n or ny < 0 or ny >= m:
-            continue
-        if visited[nx][ny]:
-            continue
-        if grid[nx][ny] > k:
-            dfs(nx, ny, k)
+        for d in range(4):
+            nx, ny = x + dx[d], y + dy[d]
+
+            if nx < 0 or nx >= n or ny < 0 or ny >= m:
+                continue
+            if visited[nx][ny]:
+                continue
+            if grid[nx][ny] > k:
+                visited[nx][ny] = True
+                stack.append((nx, ny))
 
 n, m = map(int, input().split())
 grid = [list(map(int, input().split())) for _ in range(n)]

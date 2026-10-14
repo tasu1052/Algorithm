@@ -49,7 +49,7 @@ for i in range(n):
             stone.append((i, j))
 
 cnt = 0
-for com in combinations(stone, m):
+for com in list(combinations(stone, m)):
     for sc in com:
         grid[sc[0]][sc[1]] = 0
     cnt = max(cnt, bfs())

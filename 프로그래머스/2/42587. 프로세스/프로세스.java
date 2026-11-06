@@ -1,38 +1,32 @@
 import java.util.*;
-
 class Solution {
     public int solution(int[] priorities, int location) {
         ArrayDeque<int[]> q = new ArrayDeque<>();
+        int answer = 0;
         
         for(int i=0; i<priorities.length; i++){
-            q.add(new int[]{i, priorities[i]});
+            q.offer(new int[]{i, priorities[i]});
         }
         
-        int order = 0;
-        
-        while(!q.isEmpty()){
-            int[] cur = q.poll();
+        while(true){
+            int[] now = q.poll();
             
-            boolean higher = false;
-            
-            for(int[] next : q){
-                if(next[1] > cur[1]){
-                    higher = true;
+            boolean flag = true;
+            for(int[] tmp : q){
+                if(tmp[1] > now[1]){
+                    flag = false;
                     break;
                 }
             }
             
-            if(higher){
-                q.add(cur);
+            if(flag){
+                answer++;
+                if(now[0] == location) break;
             }
             else{
-                order++;
-                
-                if(cur[0] == location){
-                    return order;
-                }
+                q.add(now);
             }
         }
-        return -1;
+        return answer;
     }
 }

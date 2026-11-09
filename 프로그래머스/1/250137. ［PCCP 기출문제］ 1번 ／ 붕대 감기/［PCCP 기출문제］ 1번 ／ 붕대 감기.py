@@ -16,18 +16,15 @@ def solution(bandage, health, attacks):
         attackTime, damage = heapq.heappop(pq)
         
         calTime = attackTime - time - 1
-        if calTime < bandage[0]:
-            curHealth += calTime * bandage[1]
-            
-            if curHealth > health:
-                curHealth = health
-        else:
+        
+        curHealth += calTime * bandage[1]
+        
+         
+        if calTime >= bandage[0]:
             success = calTime // bandage[0]
-            
-            curHealth += calTime * bandage[1]
             curHealth += success * bandage[2]
-            
-            if curHealth > health:
+
+        if curHealth > health:
                 curHealth = health
                 
         curHealth -= damage
